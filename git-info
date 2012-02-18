@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#This script will go one level deep from the current directory
+#and if the child directory is:
+#a git repo
+#and has modified files
+#it will
+#print out the directory name
+#print out the active branch
+#print out the modified files
+
+STARTDIR=$PWD
+echo -e "\n"
+for i in `find . -type d -maxdepth 1`
+  do 
+    {
+      cd "$i" || continue
+      MODIFIED=$(git status -s --untracked-files=no 2> /dev/null)  
+      if [ -n "$MODIFIED" ]; then 
+        echo ${i:2}
+        BRANCH=$(git branch | grep '^*')
+        echo " ${BRANCH:2}" 
+        echo "$MODIFIED" 
+        echo -e "\n"
+      fi 
+      cd "$STARTDIR"
+    }
+done
