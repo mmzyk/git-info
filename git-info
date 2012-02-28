@@ -16,13 +16,18 @@ STARTDIR=$PWD
 echo -e "\n"
 
 function branch {
-  echo ${i:2}
   BRANCH=$(git branch  2> /dev/null | grep '^*')
+  echo ${i:2}
   echo " ${BRANCH:2}" 
 }
 
 if [ "$1" == "--help" ]; then
-  echo "This is not very useful help"
+  echo "To use git-info:"
+  echo "Type git-info to see git branches with modified files"
+  echo "of subdirectories below the one where git-info is invoked."
+  echo "Pass the -b or --branch flag to see branches of all"
+  echo "subdirectories, regardless if they have modified files."
+  exit
 fi
 
 for i in `find . -type d -maxdepth 1`
