@@ -9,6 +9,9 @@
 #print out the active branch
 #print out the modified files
 
+#passing the -b option will print out the branch name even if
+#no modifed files are found
+
 STARTDIR=$PWD
 echo -e "\n"
 for i in `find . -type d -maxdepth 1`
@@ -21,6 +24,11 @@ for i in `find . -type d -maxdepth 1`
         BRANCH=$(git branch | grep '^*')
         echo " ${BRANCH:2}" 
         echo "$MODIFIED" 
+        echo -e "\n"
+      elif [ "$1" == "-b" ]; then
+        echo ${i:2}
+        BRANCH=$(git branch | grep '^*')
+        echo " ${BRANCH:2}"
         echo -e "\n"
       fi 
       cd "$STARTDIR"
