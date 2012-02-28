@@ -13,7 +13,7 @@
 #no modifed files are found
 
 STARTDIR=$PWD
-echo -e 
+echo 
 
 function branch {
   BRANCH=$(git branch  2> /dev/null | grep '^*')
@@ -26,12 +26,12 @@ function branch {
   fi
 }
 
-if [ "$1" == "--help" ]; then
-  echo "To use git-info:"
-  echo "Type git-info to see git branches with modified files"
-  echo "of subdirectories below the one where git-info is invoked."
-  echo "Pass the -b or --branch flag to see branches of all"
-  echo "subdirectories, regardless if they have modified files."
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+  echo "Usage: git-info [OPTION]"
+  echo "Show branches and modified files in git repos with modified files"
+  echo
+  echo "-b, --branch  Show branches even of repos without modified files"
+  echo "-h, --help    Show this help dialogue"
   exit
 fi
 
@@ -44,7 +44,7 @@ for i in `find . -type d -maxdepth 1`
         #modified files were found, so must be a git repo
         branch
         echo "$MODIFIED" 
-        echo -e 
+        echo 
       elif [ "$1" == "-b" ] || [ "$1" == "--branch" ]; then
         
         #the directory might not be a git repo, 
@@ -52,7 +52,7 @@ for i in `find . -type d -maxdepth 1`
         #print something if it reports a branch
         branch 
         if [ $FOUND -eq 1 ]; then
-          echo -e 
+          echo 
         fi
 
       fi 
