@@ -13,12 +13,17 @@
 #no modifed files are found
 
 STARTDIR=$PWD
-echo -e "\n"
+echo -e 
 
 function branch {
   BRANCH=$(git branch  2> /dev/null | grep '^*')
-  echo ${i:2}
-  echo " ${BRANCH:2}" 
+ 
+  FOUND=0 
+  if [ -n "$BRANCH" ]; then 
+    echo ${i:2}
+    echo " ${BRANCH:2}" 
+    FOUND=1
+  fi
 }
 
 if [ "$1" == "--help" ]; then
@@ -36,12 +41,20 @@ for i in `find . -type d -maxdepth 1`
       cd "$i" || continue
       MODIFIED=$(git status -s --untracked-files=no 2> /dev/null)  
       if [ -n "$MODIFIED" ]; then 
+        #modified files were found, so must be a git repo
         branch
         echo "$MODIFIED" 
-        echo -e "\n"
+        echo -e 
       elif [ "$1" == "-b" ] || [ "$1" == "--branch" ]; then
-        branch
-        echo -e "\n"
+        
+        #the directory might not be a git repo, 
+        #as no modified files were found, so only 
+        #print something if it reports a branch
+        branch 
+        if [ $FOUND -eq 1 ]; then
+          echo -e 
+        fi
+
       fi 
       cd "$STARTDIR"
     }
