@@ -16,15 +16,18 @@ Installation
 =======
 
 Place in your path and make executable.
+
 Run by simply typing git-info or git info
 
 Usage
 =======
 
 Usage: git-info [OPTION]
+
 Show branches and modified files in git repos with modified files
   
 -b, --branch  Show branches even of repos without modified files
+
 -h, --help    Show this help dialogue
  
 License
